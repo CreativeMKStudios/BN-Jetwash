@@ -1,0 +1,63 @@
+---
+import { company } from '../data/company';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = 'Ready for a cleaner outdoor space?',
+  text = 'Call or text for a free quote. Mention this website for 10% off your first clean.',
+} = Astro.props;
+---
+
+<section class="cta-band section-tight">
+  <div class="container band">
+    <div>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn-yellow" href={`tel:${company.phones[0].tel}`}>
+        {company.phones[0].display}
+      </a>
+      <a class="btn btn-outline" href={`tel:${company.phones[1].tel}`}>
+        {company.phones[1].display}
+      </a>
+      <a class="btn btn-outline" href="/contact">Contact form</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    color: white;
+  }
+
+  .band {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 34rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+</style>

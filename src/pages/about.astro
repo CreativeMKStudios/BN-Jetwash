@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { company, whyChooseUs } from '../data/company';
+import { breadcrumbSchema, localBusinessSchema } from '../data/schema';
+
+const jsonLd = [
+  localBusinessSchema(),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'About us', path: '/about' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="About Us"
+  description="Meet BN JetWashes – a friendly local jet washing team serving Daventry and surrounding areas. Clear prices, careful work, free quotes."
+  canonicalPath="/about"
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="script eyebrow">About us</p>
+      <h1>Local jet washing you can trust</h1>
+      <p class="lead">
+        {company.name} is a Daventry-based team that cleans outdoor surfaces for
+        homes and small businesses. We keep the process simple: you tell us what
+        needs cleaning, we give a free quote, then we get the job done.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container prose-grid">
+      <div>
+        <h2>Who we are</h2>
+        <p>
+          We started {company.name} to help people around Daventry bring tired
+          driveways, patios and decking back to life. Green moss, black spots and
+          slippery algae build up fast in the UK climate. You should not need
+          heavy kit or a whole weekend to fix it.
+        </p>
+        <p>
+          We turn up ready to work, take care around plants and property, and
+          leave the area tidy. No fuss. Just a cleaner outdoor space you can use
+          and enjoy.
+        </p>
+        <h2>How we work</h2>
+        <ol class="steps">
+          <li>
+            <strong>Get in touch</strong> — call, text or email with photos if
+            you have them.
+          </li>
+          <li>
+            <strong>Free quote</strong> — we confirm the job and give a clear
+            price.
+          </li>
+          <li>
+            <strong>We clean</strong> — careful jet washing suited to the
+            surface.
+          </li>
+          <li>
+            <strong>You enjoy it</strong> — safer footing and a brighter look.
+          </li>
+        </ol>
+      </div>
+      <aside class="aside">
+        <h2>Why people book us</h2>
+        <ul class="why-list">
+          {
+            whyChooseUs.map((item) => (
+              <li class="why-item">
+                <span class="why-check" aria-hidden="true">✓</span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+        <div class="offer">
+          <p class="script">First clean?</p>
+          <p class="offer-title">{company.promo}</p>
+          <p>{company.promoNote}</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Want to know if we cover your street?"
+    text="Call or text either number. We cover Daventry and lots of nearby villages."
+  />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .eyebrow {
+    color: var(--yellow);
+    font-size: 1.7rem;
+    margin: 0 0 0.35rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    max-width: 14ch;
+  }
+
+  .lead {
+    max-width: 40rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .prose-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 2.5rem;
+  }
+
+  h2 {
+    color: var(--navy);
+    margin-top: 1.5rem;
+  }
+
+  .steps {
+    list-style: decimal;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.75rem;
+    color: var(--muted);
+  }
+
+  .aside {
+    background: var(--blue-soft);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .offer {
+    margin-top: 1.5rem;
+    background: var(--yellow);
+    color: var(--navy);
+    border-radius: 1rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .offer .script {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .offer-title {
+    margin: 0.15rem 0 0.5rem;
+    font-size: 1.45rem;
+    font-weight: 900;
+  }
+
+  @media (max-width: 800px) {
+    .prose-grid {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      max-width: none;
+    }
+  }
+</style>

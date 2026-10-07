@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../data/company';
+import { breadcrumbSchema, localBusinessSchema } from '../data/schema';
+
+const jsonLd = [
+  localBusinessSchema({
+    contactPoint: company.phones.map((phone) => ({
+      '@type': 'ContactPoint',
+      telephone: phone.tel,
+      contactType: 'customer service',
+      areaServed: 'GB',
+      availableLanguage: 'English',
+    })),
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Contact Us for a Free Quote"
+  description="Call, text or email BN JetWashes for a free jet washing quote in Daventry and surrounding areas. 10% off your first clean."
+  canonicalPath="/contact"
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="script eyebrow">Contact us</p>
+      <h1>Call or text for a FREE quote</h1>
+      <p class="lead">
+        Tell us what needs cleaning and where you are. We reply quickly with a
+        clear price.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="details">
+        <h2>Phone</h2>
+        <ul class="phones">
+          {
+            company.phones.map((phone) => (
+              <li>
+                <a href={`tel:${phone.tel}`}>{phone.display}</a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h2>Email</h2>
+        <p>
+          <a href={`mailto:${company.email}`}>{company.email}</a>
+        </p>
+
+        <h2>Service area</h2>
+        <p>
+          {company.areaServedLabel}. See the full list on our{' '}
+          <a href="/areas">areas page</a>.
+        </p>
+
+        <div class="offer">
+          <p class="script">Special offer</p>
+          <p class="offer-title">{company.promo}</p>
+          <p>{company.promoNote}</p>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <h2>Send a message</h2>
+        <p class="form-note">
+          This form opens your email app with the details filled in. Or call us
+          if that is easier.
+        </p>
+        <form class="quote-form" method="get" action={`mailto:${company.email}`} enctype="text/plain">
+          <label>
+            Your name
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label>
+            Phone
+            <input type="tel" name="phone" autocomplete="tel" required />
+          </label>
+          <label>
+            Town / village
+            <input type="text" name="area" autocomplete="address-level2" required />
+          </label>
+          <label>
+            What needs cleaning?
+            <textarea name="body" rows="5" required placeholder="e.g. driveway and patio in Daventry"></textarea>
+          </label>
+          <button class="btn btn-yellow" type="submit">Email your quote request</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .eyebrow {
+    color: var(--yellow);
+    font-size: 1.7rem;
+    margin: 0 0 0.35rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    max-width: 16ch;
+  }
+
+  .lead {
+    max-width: 38rem;
+    font-size: 1.1rem;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 2rem;
+  }
+
+  h2 {
+    color: var(--navy);
+    font-size: 1.25rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .phones {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .phones a {
+    font-size: 1.55rem;
+    font-weight: 900;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .offer {
+    margin-top: 1.5rem;
+    background: var(--yellow);
+    color: var(--navy);
+    border-radius: 1rem;
+    padding: 1rem 1.15rem;
+  }
+
+  .offer .script {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .offer-title {
+    margin: 0.15rem 0 0.45rem;
+    font-size: 1.4rem;
+    font-weight: 900;
+  }
+
+  .form-wrap {
+    background: var(--blue-soft);
+    border-radius: 1.35rem;
+    padding: 1.5rem;
+  }
+
+  .form-note {
+    color: var(--muted);
+    margin-top: 0;
+  }
+
+  .quote-form {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.35rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  input,
+  textarea {
+    font: inherit;
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(30, 96, 210, 0.25);
+    background: white;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 3px solid rgba(245, 197, 24, 0.55);
+    border-color: var(--blue);
+  }
+
+  @media (max-width: 800px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      max-width: none;
+    }
+  }
+</style>

@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services, company } from '../../data/company';
+import { breadcrumbSchema, localBusinessSchema } from '../../data/schema';
+
+const jsonLd = [
+  localBusinessSchema(),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Jet Washing Services in Daventry"
+  description="Driveway, patio, decking, path, wall and moss removal services from BN JetWashes in Daventry and surrounding areas. Free quotes."
+  canonicalPath="/services"
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="script eyebrow">Services</p>
+      <h1>What we clean</h1>
+      <p class="lead">
+        Professional jet washing for homes and businesses across{' '}
+        {company.areaServedLabel.toLowerCase()}. Pick a service below or call for
+        a free quote.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container service-grid">
+      {
+        services.map((service) => (
+          <article class="service">
+            <h2>
+              <a href={`/services/${service.slug}`}>{service.title}</a>
+            </h2>
+            <p>{service.body}</p>
+            <a class="more" href={`/services/${service.slug}`}>
+              Learn more
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .eyebrow {
+    color: var(--yellow);
+    font-size: 1.7rem;
+    margin: 0 0 0.35rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .lead {
+    max-width: 40rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .service {
+    border: 1px solid var(--line);
+    border-radius: 1.15rem;
+    padding: 1.35rem 1.4rem;
+    background: linear-gradient(180deg, #ffffff, #f7faff);
+  }
+
+  .service h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .service h2 a {
+    text-decoration: none;
+    color: var(--navy);
+  }
+
+  .service h2 a:hover {
+    color: var(--blue);
+  }
+
+  .service p {
+    color: var(--muted);
+  }
+
+  .more {
+    font-weight: 800;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  @media (max-width: 700px) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

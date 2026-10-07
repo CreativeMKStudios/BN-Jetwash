@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../data/company';
+import { breadcrumbSchema } from '../data/schema';
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Privacy', path: '/privacy' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Privacy policy for the BN JetWashes website."
+  canonicalPath="/privacy"
+  jsonLd={jsonLd}
+>
+  <section class="section">
+    <div class="container narrow">
+      <h1>Privacy policy</h1>
+      <p>
+        This site is run by {company.name}. We use contact details you send us
+        only to reply to quote requests and arrange work.
+      </p>
+      <h2>What we collect</h2>
+      <p>
+        If you email or call us, we may hold your name, phone number, email
+        address, address or area, and details of the cleaning job.
+      </p>
+      <h2>How we use it</h2>
+      <p>
+        We use that information to provide quotes, carry out work, and follow up
+        about your booking. We do not sell your details.
+      </p>
+      <h2>Hosting and logs</h2>
+      <p>
+        Our website host may keep basic server logs (such as IP address and page
+        requested) for security and performance.
+      </p>
+      <h2>Your rights</h2>
+      <p>
+        You can ask us what personal data we hold about you, or ask us to update
+        or delete it, by emailing{' '}
+        <a href={`mailto:${company.email}`}>{company.email}</a>.
+      </p>
+      <h2>Contact</h2>
+      <p>
+        {company.name}<br />
+        Email: <a href={`mailto:${company.email}`}>{company.email}</a><br />
+        Phone: {company.phones.map((p) => p.display).join(' / ')}
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 44rem;
+  }
+
+  h1 {
+    color: var(--navy);
+    font-size: clamp(2rem, 4vw, 2.6rem);
+  }
+
+  h2 {
+    color: var(--navy);
+    margin-top: 1.75rem;
+    font-size: 1.25rem;
+  }
+
+  p {
+    color: var(--muted);
+  }
+</style>

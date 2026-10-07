@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { projects, company } from '../data/company';
+import { breadcrumbSchema } from '../data/schema';
+
+const jsonLd = [
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Projects', path: '/projects' },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'BN JetWashes Projects',
+    description:
+      'Before and after jet washing projects from BN JetWashes in Daventry and surrounding areas.',
+  },
+];
+---
+
+<BaseLayout
+  title="Projects & Before and After Gallery"
+  description="See BN JetWashes project results – driveway, patio and decking cleans across Daventry and surrounding areas."
+  canonicalPath="/projects"
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="script eyebrow">Projects</p>
+      <h1>Before & after results</h1>
+      <p class="lead">
+        Real outdoor cleans showing how jet washing lifts moss, algae and dirt.
+        More job photos will be added as customers share them from our Google
+        profile.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container gallery">
+      {
+        projects.map((project) => (
+          <article class="item">
+            <img
+              src={project.image}
+              alt={project.imageAlt}
+              width="1000"
+              height="650"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="meta">
+              <p class="tags">
+                {project.tags.join(' · ')} · {project.location}
+              </p>
+              <h2>{project.title}</h2>
+              <p>{project.summary}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <div class="container note">
+      <p>
+        Have we cleaned for you? Send photos to{' '}
+        <a href={`mailto:${company.email}`}>{company.email}</a> and we can add
+        your job to this page (with your OK).
+      </p>
+    </div>
+  </section>
+
+  <CtaBand title="Want results like these at your place?" />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .eyebrow {
+    color: var(--yellow);
+    font-size: 1.7rem;
+    margin: 0 0 0.35rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .lead {
+    max-width: 42rem;
+    font-size: 1.1rem;
+  }
+
+  .gallery {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: 1.5rem;
+    align-items: center;
+    background: #f7faff;
+    border-radius: 1.35rem;
+    overflow: hidden;
+  }
+
+  .item img {
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+  }
+
+  .meta {
+    padding: 1.25rem 1.5rem 1.5rem 0;
+  }
+
+  .tags {
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 0.92rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .meta h2 {
+    color: var(--navy);
+    font-size: 1.45rem;
+  }
+
+  .meta p:last-child {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .note {
+    margin-top: 2rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 800px) {
+    .item {
+      grid-template-columns: 1fr;
+    }
+
+    .meta {
+      padding: 0 1.2rem 1.3rem;
+    }
+  }
+</style>

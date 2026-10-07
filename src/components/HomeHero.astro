@@ -1,0 +1,251 @@
+---
+import { company } from '../data/company';
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="location-pill reveal">
+        <span class="pin" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path
+              d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"
+            ></path>
+          </svg>
+        </span>
+        {company.areaServedLabel}
+      </p>
+      <p class="script hook reveal reveal-delay-1">{company.hook}</p>
+      <h1 id="hero-heading" class="reveal reveal-delay-2">
+        Bring your outdoor space
+        <span class="accent">back to life!</span>
+      </h1>
+      <p class="lead reveal reveal-delay-3">
+        Driveways, patios, decking and more – we do the hard work, you enjoy the
+        results.
+      </p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a class="btn btn-yellow" href={`tel:${company.phones[0].tel}`}>
+          Call {company.phones[0].display}
+        </a>
+        <a class="btn btn-outline" href="/contact">Get a free quote</a>
+      </div>
+    </div>
+
+    <aside class="promo-badge reveal reveal-delay-2" aria-label="Special offer">
+      <p class="promo-top">10% OFF</p>
+      <p class="promo-bottom script">your first clean!</p>
+    </aside>
+  </div>
+
+  <div class="hero-visual">
+    <div class="container visual-frame">
+      <figure class="before-after">
+        <img
+          src="/images/hero-action.jpg"
+          alt="Pressure washer cleaning dirty outdoor paving, showing the clean path left behind"
+          width="1200"
+          height="675"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <figcaption>
+          <span class="script before-label">before...</span>
+          <span class="script after-label">after!</span>
+        </figcaption>
+      </figure>
+    </div>
+    <svg
+      class="wave"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        class="wave-path"
+        d="M0,40 C240,90 480,0 720,40 C960,80 1200,10 1440,45 L1440,90 L0,90 Z"
+        fill="#ffffff"></path>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: linear-gradient(160deg, #1e60d2 0%, #184fad 45%, #123f8c 100%);
+    color: white;
+    overflow: hidden;
+    padding-top: 2.5rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(245, 197, 24, 0.22), transparent 35%),
+      radial-gradient(circle at 10% 80%, rgba(255, 255, 255, 0.12), transparent 40%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding-bottom: 1.5rem;
+  }
+
+  .location-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 0 1rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .pin {
+    display: inline-grid;
+    place-items: center;
+    color: var(--yellow);
+  }
+
+  .hook {
+    color: var(--yellow);
+    font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+    margin: 0 0 0.35rem;
+    transform: rotate(-2deg);
+    transform-origin: left center;
+  }
+
+  h1 {
+    font-size: clamp(2.35rem, 5.5vw, 4rem);
+    font-weight: 900;
+    max-width: 12ch;
+    margin-bottom: 1rem;
+  }
+
+  .accent {
+    color: var(--yellow);
+  }
+
+  .lead {
+    font-size: 1.12rem;
+    max-width: 34rem;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .promo-badge {
+    width: min(100%, 220px);
+    aspect-ratio: 1;
+    margin-left: auto;
+    margin-top: 0.5rem;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--navy);
+    border: 3px dashed rgba(255, 255, 255, 0.85);
+    outline: 8px solid var(--yellow);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    box-shadow: var(--shadow);
+    animation: floaty 4.5s ease-in-out infinite;
+  }
+
+  .promo-top {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .promo-bottom {
+    margin: 0.2rem 0 0;
+    font-size: 1.55rem;
+    line-height: 1.1;
+  }
+
+  .hero-visual {
+    position: relative;
+    margin-top: 1rem;
+  }
+
+  .visual-frame {
+    position: relative;
+    z-index: 1;
+  }
+
+  .before-after {
+    margin: 0;
+    border-radius: 1.25rem 1.25rem 0 0;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(8, 20, 50, 0.35);
+    position: relative;
+  }
+
+  .before-after img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  figcaption {
+    position: absolute;
+    inset: auto 0 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    pointer-events: none;
+  }
+
+  .before-label,
+  .after-label {
+    color: var(--navy);
+    background: rgba(255, 255, 255, 0.88);
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 1.35rem;
+  }
+
+  .wave {
+    display: block;
+    width: 100%;
+    height: 70px;
+    margin-top: -4px;
+  }
+
+  @media (max-width: 800px) {
+    .hero {
+      padding-top: 1.5rem;
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      max-width: none;
+    }
+
+    .promo-badge {
+      margin: 0.5rem auto 0;
+      width: 170px;
+    }
+
+    .before-after {
+      border-radius: 1rem 1rem 0 0;
+    }
+  }
+</style>

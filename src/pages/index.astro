@@ -1,0 +1,336 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import {
+  company,
+  services,
+  whyChooseUs,
+  projects,
+  areas,
+  reviews,
+} from '../data/company';
+import {
+  localBusinessSchema,
+  websiteSchema,
+  faqSchema,
+} from '../data/schema';
+
+const faqs = [
+  {
+    question: 'Which areas do BN JetWashes cover?',
+    answer:
+      'We cover Daventry and surrounding areas, including Long Buckby, Weedon Bec, Braunston, Badby, Flore, Crick, Kilsby and nearby villages. If you are close to Daventry, ask — we likely cover you.',
+  },
+  {
+    question: 'Is a quote free?',
+    answer:
+      'Yes. Call or text either number, or use the contact form. We give a clear price before any work starts.',
+  },
+  {
+    question: 'How do I get 10% off my first clean?',
+    answer:
+      'Mention this website or the leaflet when you book. The discount applies to your first clean with us.',
+  },
+  {
+    question: 'What surfaces can you clean?',
+    answer:
+      'Driveways and block paving, patios, paths, walls, fences, garden hard surfaces, decking, plus moss and algae removal for homes and small businesses.',
+  },
+];
+
+const jsonLd = [
+  localBusinessSchema(),
+  websiteSchema(),
+  faqSchema(faqs),
+];
+---
+
+<BaseLayout
+  title="Jet Washing Daventry | Driveways, Patios & Decking"
+  description="BN JetWashes – local jet washing in Daventry and surrounding areas. Driveways, patios, decking and more. Free quotes. 10% off your first clean."
+  canonicalPath="/"
+  jsonLd={jsonLd}
+>
+  <HomeHero />
+
+  <section class="section what-why">
+    <div class="container split">
+      <div>
+        <h2 class="section-title">What we clean</h2>
+        <p class="section-lead">
+          From greasy driveways to slippery decking, we clean the outdoor
+          surfaces that make your home look tired.
+        </p>
+        <ul class="pill-list">
+          {
+            services.map((service) => (
+              <li>
+                <a class="pill" href={`/services/${service.slug}`}>
+                  <span class="pill-check" aria-hidden="true">✓</span>
+                  {service.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <h2 class="section-title">Why choose us?</h2>
+        <p class="section-lead">
+          Simple service, clear prices, and results you can see when the job is
+          done.
+        </p>
+        <ul class="why-list">
+          {
+            whyChooseUs.map((item) => (
+              <li class="why-item">
+                <span class="why-check" aria-hidden="true">✓</span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section projects-teaser">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Recent results</h2>
+        <p class="section-lead">
+          Before and after transforms from outdoor cleans across the Daventry
+          area.
+        </p>
+      </div>
+      <div class="project-grid">
+        {
+          projects.map((project) => (
+            <article class="project-card">
+              <a href="/projects">
+                <img
+                  src={project.image}
+                  alt={project.imageAlt}
+                  width="800"
+                  height="520"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="project-meta">
+                  <h3>{project.title}</h3>
+                  <p>{project.summary}</p>
+                </div>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+      <p class="more-link">
+        <a href="/projects">See all projects</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section reviews" id="reviews">
+    <div class="container">
+      <h2 class="section-title">Reviews</h2>
+      {
+        reviews.length > 0 ? (
+          <div class="review-grid">
+            {reviews.map((review) => (
+              <blockquote class="review">
+                <p>“{review.text}”</p>
+                <footer>
+                  <strong>{review.author}</strong>
+                  <span>
+                    {' '}
+                    · {review.rating}/5 · {review.source}
+                  </span>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        ) : (
+          <div class="review-empty">
+            <p>
+              We are a local Daventry jet washing team building our online
+              reviews. If we have cleaned for you, we would love an honest Google
+              review — it helps neighbours find a reliable local cleaner.
+            </p>
+            <p>
+              Prefer to talk first? Call{' '}
+              <a href={`tel:${company.phones[0].tel}`}>
+                {company.phones[0].display}
+              </a>{' '}
+              or{' '}
+              <a href={`tel:${company.phones[1].tel}`}>
+                {company.phones[1].display}
+              </a>{' '}
+              and ask about recent jobs near you.
+            </p>
+            <a class="btn btn-blue" href="/contact">Request a free quote</a>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section areas-strip">
+    <div class="container">
+      <h2 class="section-title">Areas we cover</h2>
+      <p class="section-lead">
+        Based around Daventry, we travel to nearby towns and villages across
+        west Northamptonshire.
+      </p>
+      <ul class="area-pills">
+        {
+          areas.map((area) => (
+            <li>
+              <a href={`/areas/${area.slug}`}>{area.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section faq">
+    <div class="container narrow">
+      <h2 class="section-title">Common questions</h2>
+      {
+        faqs.map((faq) => (
+          <details>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .section-head {
+    margin-bottom: 1.75rem;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .project-card {
+    border-radius: 1.1rem;
+    overflow: hidden;
+    background: var(--blue-soft);
+  }
+
+  .project-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+  }
+
+  .project-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .project-meta {
+    padding: 1rem 1.1rem 1.2rem;
+  }
+
+  .project-meta h3 {
+    font-size: 1.15rem;
+  }
+
+  .project-meta p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+
+  .more-link {
+    margin-top: 1.25rem;
+    font-weight: 800;
+  }
+
+  .projects-teaser {
+    background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  }
+
+  .review-empty {
+    max-width: 42rem;
+    background: var(--blue-soft);
+    border-radius: 1.25rem;
+    padding: 1.5rem 1.6rem;
+  }
+
+  .area-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+  }
+
+  .area-pills a {
+    display: inline-flex;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .area-pills a:hover {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+  }
+
+  .areas-strip {
+    background: #f4f8ff;
+  }
+
+  .narrow {
+    max-width: 46rem;
+  }
+
+  details {
+    border-bottom: 1px solid var(--line);
+    padding: 1rem 0;
+  }
+
+  summary {
+    font-weight: 800;
+    cursor: pointer;
+    color: var(--navy);
+  }
+
+  details p {
+    margin: 0.75rem 0 0.25rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .split,
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
