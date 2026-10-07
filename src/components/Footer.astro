@@ -1,0 +1,197 @@
+---
+import { company, areas } from '../data/company';
+
+const year = new Date().getFullYear();
+const topAreas = areas.slice(0, 8);
+---
+
+<footer class="site-footer">
+  <div class="footer-wave" aria-hidden="true"></div>
+  <div class="container footer-main">
+    <div class="footer-cta reveal">
+      <p class="script footer-hook">Call or text for a FREE quote!</p>
+      <div class="phones">
+        {
+          company.phones.map((phone) => (
+            <a href={`tel:${phone.tel}`}>{phone.display}</a>
+          ))
+        }
+      </div>
+      <p class="footer-promo">{company.promoNote}</p>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <h2 class="footer-brand">{company.name}</h2>
+        <p>
+          Jet washing for driveways, patios, decking and more across{' '}
+          {company.areaServedLabel.toLowerCase()}.
+        </p>
+        <p class="footer-email">
+          <a href={`mailto:${company.email}`}>{company.email}</a>
+        </p>
+      </div>
+
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="/about">About us</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/projects">Projects</a></li>
+          <li><a href="/areas">Areas we cover</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Local areas</h3>
+        <ul class="area-links">
+          {
+            topAreas.map((area) => (
+              <li>
+                <a href={`/areas/${area.slug}`}>{area.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© {year} {company.name}. Serving {company.areaServedLabel}.</p>
+      <p>
+        <a href="/privacy">Privacy</a>
+        ·
+        <a href="/sitemap-index.xml">Sitemap</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy);
+    color: rgba(255, 255, 255, 0.88);
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .footer-wave {
+    height: 28px;
+    background:
+      radial-gradient(circle at 10% 0, transparent 18px, var(--navy) 19px) 0 0 /
+        40px 28px repeat-x,
+      radial-gradient(circle at 10% 100%, var(--navy) 18px, transparent 19px) 20px
+        -14px / 40px 28px repeat-x;
+    transform: translateY(-27px);
+  }
+
+  .footer-main {
+    padding: 0 0 2rem;
+  }
+
+  .footer-cta {
+    text-align: center;
+    padding: 0.5rem 0 2.5rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    margin-bottom: 2rem;
+  }
+
+  .footer-hook {
+    color: var(--yellow);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: 0 0 0.85rem;
+  }
+
+  .phones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem 1.75rem;
+  }
+
+  .phones a {
+    color: white;
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    font-weight: 900;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+
+  .phones a:hover {
+    color: var(--yellow);
+  }
+
+  .footer-promo {
+    margin: 1rem 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand,
+  .footer-grid h3 {
+    color: white;
+    margin-bottom: 0.85rem;
+  }
+
+  .footer-grid h3 {
+    font-size: 1.05rem;
+  }
+
+  .footer-grid p,
+  .footer-grid a {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .footer-grid ul {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .footer-grid a {
+    text-decoration: none;
+  }
+
+  .footer-grid a:hover {
+    color: var(--yellow);
+  }
+
+  .area-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem 1rem;
+  }
+
+  .footer-email {
+    margin-top: 1rem;
+  }
+
+  .footer-bottom {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .footer-bottom a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+  }
+
+  @media (max-width: 800px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

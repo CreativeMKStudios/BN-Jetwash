@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { areas, services, company, siteUrl } from '../../data/company';
+import { breadcrumbSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({
+    params: { slug: area.slug },
+    props: { area },
+  }));
+}
+
+const { area } = Astro.props;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `Jet washing in ${area.name}`,
+    description: area.blurb,
+    url: `${siteUrl}/areas/${area.slug}`,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: company.name,
+      telephone: company.phones.map((p) => p.tel),
+      email: company.email,
+    },
+    areaServed: {
+      '@type': 'City',
+      name: area.name,
+    },
+  },
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Areas', path: '/areas' },
+    { name: area.name, path: `/areas/${area.slug}` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={`Jet Washing in ${area.name}`}
+  description={`Professional jet washing in ${area.name} from BN JetWashes. Driveways, patios, decking and more. Free quotes. 10% off your first clean.`}
+  canonicalPath={`/areas/${area.slug}`}
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">
+        <a href="/areas">Areas</a> / {area.name}
+      </p>
+      <h1>Jet washing in {area.name}</h1>
+      <p class="lead">{area.blurb}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content">
+      <h2>Outdoor cleaning for {area.name} homes</h2>
+      <p>
+        Moss, algae and dirt build up on driveways and patios around {area.name}.
+        {company.name} provides careful jet washing so outdoor surfaces look
+        brighter and feel safer underfoot.
+      </p>
+      <h2>Popular jobs in {area.name}</h2>
+      <ul class="pill-list">
+        {
+          services.slice(0, 6).map((service) => (
+            <li>
+              <a class="pill" href={`/services/${service.slug}`}>
+                <span class="pill-check" aria-hidden="true">✓</span>
+                {service.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <h2>Book a free quote</h2>
+      <p>
+        Call <a href={`tel:${company.phones[0].tel}`}>{company.phones[0].display}</a>{' '}
+        or <a href={`tel:${company.phones[1].tel}`}>{company.phones[1].display}</a>,
+        or email <a href={`mailto:${company.email}`}>{company.email}</a>.
+        Mention this page for {company.promo.toLowerCase()}.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand title={`Free jet wash quote for ${area.name}`} />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.25rem 0 2.75rem;
+  }
+
+  .eyebrow {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+  }
+
+  .eyebrow a {
+    color: var(--yellow);
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+  }
+
+  .lead {
+    max-width: 42rem;
+    font-size: 1.1rem;
+  }
+
+  .content {
+    max-width: 46rem;
+  }
+
+  .content h2 {
+    color: var(--navy);
+    margin-top: 1.75rem;
+  }
+
+  .pill-list {
+    margin: 1rem 0 0.5rem;
+  }
+</style>

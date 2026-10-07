@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="Sorry, that page does not exist on the BN JetWashes website."
+  canonicalPath="/404"
+  noindex={true}
+>
+  <section class="section">
+    <div class="container narrow">
+      <h1>Page not found</h1>
+      <p>That link does not match a page on this site.</p>
+      <p>
+        <a class="btn btn-blue" href="/">Back to home</a>
+        <a class="btn btn-yellow" href="/contact">Contact us</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 36rem;
+    text-align: center;
+    padding-top: 2rem;
+  }
+
+  h1 {
+    color: var(--navy);
+  }
+
+  p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+</style>

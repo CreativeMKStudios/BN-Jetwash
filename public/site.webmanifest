@@ -1,0 +1,18 @@
+{
+  "name": "BN JetWashes",
+  "short_name": "BN JetWashes",
+  "description": "Jet washing in Daventry and surrounding areas",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1E60D2",
+  "theme_color": "#1E60D2",
+  "lang": "en-GB",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

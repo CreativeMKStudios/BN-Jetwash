@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { areas, company } from '../../data/company';
+import { breadcrumbSchema, localBusinessSchema } from '../../data/schema';
+
+const jsonLd = [
+  localBusinessSchema(),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Areas we cover', path: '/areas' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Areas We Cover | Jet Washing Near Daventry"
+  description="BN JetWashes covers Daventry, Long Buckby, Weedon Bec, Braunston, Crick, Kilsby and surrounding Northamptonshire villages. Free local quotes."
+  canonicalPath="/areas"
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="script eyebrow">Local coverage</p>
+      <h1>Areas we cover</h1>
+      <p class="lead">
+        {company.name} is based around Daventry and travels to nearby towns and
+        villages. If your place is close and not listed, still ask — we often
+        cover it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container area-grid">
+      {
+        areas.map((area) => (
+          <article class="area">
+            <h2>
+              <a href={`/areas/${area.slug}`}>Jet washing in {area.name}</a>
+            </h2>
+            <p>{area.blurb}</p>
+            <a class="more" href={`/areas/${area.slug}`}>
+              View {area.name} page
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand title="Not sure if we reach you?" text="Call or text with your postcode and we will confirm." />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .eyebrow {
+    color: var(--yellow);
+    font-size: 1.7rem;
+    margin: 0 0 0.35rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  .lead {
+    max-width: 42rem;
+    font-size: 1.1rem;
+  }
+
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .area {
+    border: 1px solid var(--line);
+    border-radius: 1.1rem;
+    padding: 1.2rem 1.25rem;
+    background: white;
+  }
+
+  .area h2 {
+    font-size: 1.15rem;
+  }
+
+  .area h2 a {
+    text-decoration: none;
+    color: var(--navy);
+  }
+
+  .area p {
+    color: var(--muted);
+    font-size: 0.98rem;
+  }
+
+  .more {
+    font-weight: 800;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .area-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .area-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

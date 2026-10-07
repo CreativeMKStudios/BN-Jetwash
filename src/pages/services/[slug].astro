@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services, company, siteUrl } from '../../data/company';
+import { breadcrumbSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.body,
+    url: `${siteUrl}/services/${service.slug}`,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: company.name,
+      telephone: company.phones.map((p) => p.tel),
+      email: company.email,
+      areaServed: company.areaServedLabel,
+    },
+    areaServed: company.areaServedLabel,
+    serviceType: service.title,
+  },
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: service.title, path: `/services/${service.slug}` },
+  ]),
+];
+---
+
+<BaseLayout
+  title={`${service.title} in Daventry`}
+  description={`${service.short} BN JetWashes serves ${company.areaServedLabel}. Free quotes.`}
+  canonicalPath={`/services/${service.slug}`}
+  jsonLd={jsonLd}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">
+        <a href="/services">Services</a> / {service.title}
+      </p>
+      <h1>{service.title} in Daventry</h1>
+      <p class="lead">{service.body}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content">
+      <h2>What to expect</h2>
+      <p>
+        We look at the surface, agree the work, and give a clear price before we
+        start. On the day we jet wash carefully, protect nearby plants where
+        needed, and leave the area looking cleaner and safer.
+      </p>
+      <h2>Serving {company.areaServedLabel}</h2>
+      <p>
+        This service is available across Daventry and nearby towns and villages.
+        Not sure if we cover you? <a href="/contact">Send a message</a> or call{' '}
+        <a href={`tel:${company.phones[0].tel}`}>{company.phones[0].display}</a>.
+      </p>
+      <p>
+        <strong>{company.promo}</strong> — {company.promoNote}
+      </p>
+      <p>
+        <a href="/services">← All services</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand title={`Get a free quote for ${service.title.toLowerCase()}`} />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #1e60d2, #184fad);
+    color: white;
+    padding: 3.25rem 0 2.75rem;
+  }
+
+  .eyebrow {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+  }
+
+  .eyebrow a {
+    color: var(--yellow);
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    max-width: 18ch;
+  }
+
+  .lead {
+    max-width: 42rem;
+    font-size: 1.1rem;
+  }
+
+  .content {
+    max-width: 44rem;
+  }
+
+  .content h2 {
+    color: var(--navy);
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    h1 {
+      max-width: none;
+    }
+  }
+</style>
